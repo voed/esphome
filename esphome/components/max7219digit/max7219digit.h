@@ -34,6 +34,8 @@ class MAX7219Component : public PollingComponent,
 
   void setup() override;
 
+  void reset();
+
   void loop() override;
 
   void dump_config() override;

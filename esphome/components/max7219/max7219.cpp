@@ -170,6 +170,14 @@ void MAX7219Component::update() {
     (*this->writer_)(*this);
   this->display();
 }
+
+void MAX7219Component::turn_on_off(bool on_off) {
+  if (on_off) {
+    this->send_to_all_(MAX7219_REGISTER_SHUTDOWN, 1);
+  } else {
+    this->send_to_all_(MAX7219_REGISTER_SHUTDOWN, 0);
+  }
+}
 uint8_t MAX7219Component::print(uint8_t start_pos, const char *str) {
   uint8_t pos = start_pos;
   for (; *str != '\0'; str++) {

@@ -58,7 +58,7 @@ void MAX7219Component::reset()
   this->display();
 
   // power up
-  this->send_to_all_(MAX7219_REGISTER_TEST, 0);
+  this->send_to_all_(MAX7219_REGISTER_DISPLAY_TEST, MAX7219_NO_DISPLAY_TEST);
   this->send_to_all_(MAX7219_REGISTER_SHUTDOWN, 1);
 }
 

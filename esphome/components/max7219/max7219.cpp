@@ -124,8 +124,9 @@ void MAX7219Component::reset()
   // let's use our own ASCII -> led pattern encoding
   this->send_to_all_(MAX7219_REGISTER_DECODE_MODE, 0);
   this->send_to_all_(MAX7219_REGISTER_INTENSITY, this->intensity_);
+    */
   this->display();
-  */
+
   // power up
   this->send_to_all_(MAX7219_REGISTER_TEST, 0);
   this->send_to_all_(MAX7219_REGISTER_SHUTDOWN, 1);

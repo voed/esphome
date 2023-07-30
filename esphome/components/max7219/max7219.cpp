@@ -115,6 +115,20 @@ const uint8_t MAX7219_ASCII_TO_RAW[95] PROGMEM = {
 };
 
 float MAX7219Component::get_setup_priority() const { return setup_priority::PROCESSOR; }
+
+void MAX7219Component::reset()
+{
+  // let's assume the user has all 8 digits connected, only important in daisy chained setups anyway
+  this->send_to_all_(MAX7219_REGISTER_SCAN_LIMIT, 7);
+  // let's use our own ASCII -> led pattern encoding
+  this->send_to_all_(MAX7219_REGISTER_DECODE_MODE, 0);
+  this->send_to_all_(MAX7219_REGISTER_INTENSITY, this->intensity_);
+  this->display();
+  // power up
+  this->send_to_all_(MAX7219_REGISTER_TEST, 0);
+  this->send_to_all_(MAX7219_REGISTER_SHUTDOWN, 1);
+}
+
 void MAX7219Component::setup() {
   ESP_LOGCONFIG(TAG, "Setting up MAX7219...");
   this->spi_setup();

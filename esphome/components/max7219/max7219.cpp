@@ -118,12 +118,14 @@ float MAX7219Component::get_setup_priority() const { return setup_priority::PROC
 
 void MAX7219Component::reset()
 {
+  /*
   // let's assume the user has all 8 digits connected, only important in daisy chained setups anyway
   this->send_to_all_(MAX7219_REGISTER_SCAN_LIMIT, 7);
   // let's use our own ASCII -> led pattern encoding
   this->send_to_all_(MAX7219_REGISTER_DECODE_MODE, 0);
   this->send_to_all_(MAX7219_REGISTER_INTENSITY, this->intensity_);
   this->display();
+  */
   // power up
   this->send_to_all_(MAX7219_REGISTER_TEST, 0);
   this->send_to_all_(MAX7219_REGISTER_SHUTDOWN, 1);

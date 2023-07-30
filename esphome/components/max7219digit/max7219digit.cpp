@@ -46,6 +46,22 @@ void MAX7219Component::setup() {
   this->send_to_all_(MAX7219_REGISTER_SHUTDOWN, 1);
 }
 
+void MAX7219Component::reset()
+{
+  /*
+  // let's assume the user has all 8 digits connected, only important in daisy chained setups anyway
+  this->send_to_all_(MAX7219_REGISTER_SCAN_LIMIT, 7);
+  // let's use our own ASCII -> led pattern encoding
+  this->send_to_all_(MAX7219_REGISTER_DECODE_MODE, 0);
+  this->send_to_all_(MAX7219_REGISTER_INTENSITY, this->intensity_);
+    */
+  this->display();
+
+  // power up
+  this->send_to_all_(MAX7219_REGISTER_TEST, 0);
+  this->send_to_all_(MAX7219_REGISTER_SHUTDOWN, 1);
+}
+
 void MAX7219Component::dump_config() {
   ESP_LOGCONFIG(TAG, "MAX7219DIGIT:");
   ESP_LOGCONFIG(TAG, "  Number of Chips: %u", this->num_chips_);

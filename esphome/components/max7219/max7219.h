@@ -24,6 +24,8 @@ class MAX7219Component : public PollingComponent,
 
   void update() override;
 
+  void turn_on_off(bool on_off);
+
   float get_setup_priority() const override;
 
   void display();

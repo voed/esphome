@@ -71,9 +71,15 @@ class FanCall {
     this->direction_ = direction;
     return *this;
   }
+
+  /// Set the preset of the fan device based on a string.
+  FanCall &set_preset(const std::string &preset);
+
   optional<FanDirection> get_direction() const { return this->direction_; }
 
   void perform();
+
+  const optional<std::string> &get_custom_preset() const;
 
  protected:
   void validate_();
@@ -83,6 +89,7 @@ class FanCall {
   optional<bool> oscillating_;
   optional<int> speed_;
   optional<FanDirection> direction_{};
+  optional<std::string> custom_preset_;
 };
 
 struct FanRestoreState {
@@ -91,6 +98,8 @@ struct FanRestoreState {
   bool oscillating;
   FanDirection direction;
 
+  bool uses_custom_preset{false};
+  uint8_t custom_preset;
   /// Convert this struct to a fan call that can be performed.
   FanCall to_call(Fan &fan);
   /// Apply these settings to the fan.
@@ -107,6 +116,9 @@ class Fan : public EntityBase {
   int speed{0};
   /// The current direction of the fan
   FanDirection direction{FanDirection::FORWARD};
+
+  /// The active custom preset mode of the fan device.
+  optional<std::string> custom_preset;
 
   FanCall turn_on();
   FanCall turn_off();
@@ -136,6 +148,9 @@ class Fan : public EntityBase {
   CallbackManager<void()> state_callback_{};
   ESPPreferenceObject rtc_;
   FanRestoreMode restore_mode_;
+
+  /// Set custom preset. Reset primary preset. Return true if preset has been changed.
+  bool set_custom_preset_(const std::string &preset);
 };
 
 }  // namespace fan
